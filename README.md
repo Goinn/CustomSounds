@@ -16,7 +16,7 @@ Currently supports customisation for the following sounds:
 * Game over  
 
 ## Setup
-!You will have to redo these steps for every new update
+!After an update you might have to either grab the newest release of CustomSounds or reinstall MelonLoader completely!
 
 0. Backup your game files
 1. Prepare Synth Riders for the use with mods by following the installation instructions for MelonLoader:  https://melonwiki.xyz/#/?id=automated-installation
