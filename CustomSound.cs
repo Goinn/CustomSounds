@@ -7,9 +7,8 @@ using System.Collections;
 using HarmonyLib;
 using Util.Audio;
 
-namespace CustomSound
+namespace Custom_Sound
 {
-
     public class CustomSound : MelonMod
     {
         public static string root = "/CustomSounds/";
@@ -24,11 +23,10 @@ namespace CustomSound
         public static string buttonclickFilePath = "buttonclick.wav";
         public static string buttonhoverFilePath = "buttonhover.wav";
         public static string gameoverFilePath = "gameover.wav";
-        public static string resultFilePath = "result.wav";
+        public static string resultFilePath = "resultbgm.wav";
 
         /*
          * missing sounds:
-            * game over
             * song pass
             * power up
          */
@@ -68,7 +66,7 @@ namespace CustomSound
                             Util_HitSFXSource.s_instance.m_hitPerfectClip[1] = hitAudio;
                             MelonLogger.Msg("Hit set");
                             break;
-                        case 1: // note fail
+                        case 1: // note miss
                             Util_HitSFXSource.s_instance.m_failClip = hitAudio;
                             MelonLogger.Msg("Miss set");
                             break;
@@ -129,7 +127,7 @@ namespace CustomSound
                             Type gssc = typeof(Game_ScoreSceneController);
                             FieldInfo resultClip = gssc.GetField("m_NormalClip", BindingFlags.NonPublic | BindingFlags.Instance);
                             resultClip.SetValue(Game_ScoreSceneController.s_instance, hitAudio);
-                            MelonLogger.Msg("Result set");
+                            MelonLogger.Msg("Result bgm set");
                             break;
                         default:
                             break;

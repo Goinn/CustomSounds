@@ -8,7 +8,7 @@ using MelonLoader;
 // Attribute gesteuert. Ändern Sie diese Attributwerte, um die Informationen zu ändern,
 // die einer Assembly zugeordnet sind.
 [assembly: AssemblyTitle("Custom Sound")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Customize sound files from Synth Riders")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Custom Sound")]
@@ -37,5 +37,5 @@ using MelonLoader;
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
-[assembly: MelonInfo(typeof(CustomSound), "Custom Sound", "0.1.0", "Moinn")]
+[assembly: MelonInfo(typeof(CustomSound), "Custom Sound", "1.0.0", "Moinn")]
 [assembly: MelonGame("Kluge Interactive", "SynthRiders")]

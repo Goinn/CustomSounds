@@ -4,16 +4,19 @@ Allows to customize most sounds from Synth Riders
 
 ## Supported sounds
 
-Currently supports customisation for the following sounds:
+Currently supports customization for the following sounds:
 
-* Note hit
-* Note miss
-* Special sounds
-* Max combo
-* Wall hit
-* Menu button click
-* Menu button hover
-* Game over  
+* Note hit (hit.wav)
+* Note miss (miss.wav)
+* Special start (special.wav)
+* Special fail (specialfail.wav)
+* Special pass (specialpass.wav)
+* Max combo (maxcombo.wav)
+* Wall hit (wall.wav)
+* Menu button click (buttonclick.wav)
+* Menu button hover (buttonhover.wav)
+* Game over  (gameover.wav)
+
 
 ## Setup
 !After an update you might have to either grab the newest release of CustomSounds or reinstall MelonLoader completely!
@@ -21,14 +24,13 @@ Currently supports customisation for the following sounds:
 0. Backup your game files
 1. Prepare Synth Riders for the use with mods by following the installation instructions for MelonLoader:  https://melonwiki.xyz/#/?id=automated-installation
 2. Grab the newest version of CustomSounds from releases and add it under ./SynthRiders/Mods (create new directory if not existent)
-3. Create a new directory for custom sounds under in the main game dircectory called CustomSounds
-4. Extract the sound files from soundssamples.zip into the new directory
-5. Customise sounds by overwriting the sample sounds files 
-&. Profit?!
+3. Extract the sound files from sfx.zip into the game directory
+4. Customize sounds by overwriting the sample sounds files under CustomSounds (all provided files are empty sound files)
+5. Profit?!
 
 ## Disclaimer
 Adding this mod might cause random lag spikes during the song. 
 Still investigating this as I had a live stream on last time I tested the mod and 
 at least in theory the mod should only execute code immediately after a scene gets loaded.
 
-This mod is not related to Synth Riders or Kluge Interactive in any way.
+This mod is not related to Synth Riders Devs or Kluge Interactive in any way.
