@@ -187,7 +187,7 @@ namespace Custom_Sound
                 MelonCoroutines.Start(instance.GetAudioClip(gameoverFilePath, 20));
             }
         }
-        /*[HarmonyPatch(typeof(Game_ScoreSceneController), "Awake")]
+        [HarmonyPatch(typeof(Game_ScoreSceneController), "Awake")]
         public static class OverwriteGSSC
         {
             private static void Postfix()
@@ -197,6 +197,6 @@ namespace Custom_Sound
                 MelonLogger.Msg("Custom sound GSSC");
                 MelonCoroutines.Start(instance.GetAudioClip(resultFilePath, 30));
             }
-        }*/
+        }
     }
 }
