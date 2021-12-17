@@ -25,13 +25,31 @@ namespace Custom_Sound
         public static string gameoverFilePath = "gameover.wav";
         public static string resultFilePath = "resultbgm.wav";
 
+        public static CustomSound cs_instance;
         /*
          * missing sounds:
             * song pass
             * power up
          */
 
-        public IEnumerator GetAudioClip(string path, int sfxSelect)
+        public enum SfxSelect 
+        {
+            hit,
+            miss,
+            rail,
+            special,
+            specialpass,
+            specialfail,
+            maxcombo,
+            wall,
+            buttonclick,
+            buttonhover,
+            gameover,
+            resultbgm
+        }
+        
+
+        public IEnumerator GetAudioClip(string path, SfxSelect sfxSelect)
         {
             Type xsfx = null;
             ExtraSFXAudioController xsfxInstance = null;
@@ -47,7 +65,7 @@ namespace Custom_Sound
                 }
                 else
                 { 
-                    if (sfxSelect > 9 & sfxSelect < 20)
+                    if (sfxSelect >= SfxSelect.buttonclick & sfxSelect <= SfxSelect.buttonhover)
                     {
                         xsfx = typeof(ExtraSFXAudioController);
                         FieldInfo xsfxInstanceField = xsfx.GetField("s_instance", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static);
@@ -60,39 +78,39 @@ namespace Custom_Sound
                     switch (sfxSelect)
                     {
                         // from Util_HitSFXSource
-                        case 0: // note hit
+                        case SfxSelect.hit: // note hit
                             Util_HitSFXSource.s_instance.m_hitBadClip[1] = hitAudio;
                             Util_HitSFXSource.s_instance.m_hitClip[1] = hitAudio;
                             Util_HitSFXSource.s_instance.m_hitPerfectClip[1] = hitAudio;
                             MelonLogger.Msg("Hit set");
                             break;
-                        case 1: // note miss
+                        case SfxSelect.miss: // note miss
                             Util_HitSFXSource.s_instance.m_failClip = hitAudio;
                             MelonLogger.Msg("Miss set");
                             break;
-                        case 2:
+                        case SfxSelect.rail:
                             Util_HitSFXSource.s_instance.m_lineStartClip[1] = hitAudio;
                             //Util_HitSFXSource.s_instance.m_lineClip[1] = hitAudio; is private for some reason
                             Util_HitSFXSource.s_instance.m_lineEndClip[1] = hitAudio; // rail end hit
                             MelonLogger.Msg("Rail set");
                             break;
-                        case 3: // special start
+                        case SfxSelect.special: // special start
                             Util_HitSFXSource.s_instance.m_comboClip = hitAudio;
                             MelonLogger.Msg("Special start set");
                             break;
-                        case 4: // special complete
+                        case SfxSelect.specialpass: // special complete
                             Util_HitSFXSource.s_instance.m_comboEndClip = hitAudio;
                             MelonLogger.Msg("Special complete set");
                             break;
-                        case 5: // special fail
+                        case SfxSelect.specialfail: // special fail
                             Util_HitSFXSource.s_instance.m_comboFailClip = hitAudio;
                             MelonLogger.Msg("Special fail set");
                             break;
-                        case 6: // max combo
+                        case SfxSelect.maxcombo: // max combo
                             Util_HitSFXSource.s_instance.m_rewardClip = hitAudio;
                             MelonLogger.Msg("Max combo set");
                             break;
-                        case 7: // wall hit
+                        case SfxSelect.wall: // wall hit
                             Util_HitSFXSource.s_instance.m_failClipWall = hitAudio;
                             MelonLogger.Msg("Wall hit set");
                             break;
@@ -106,24 +124,24 @@ namespace Custom_Sound
                         multiplayerPositionsAnnouncer
                         homeMenuElectricity
                          */
-                        case 10: // menu click, click seems to be detected instead of hovering sometimes
+                        case SfxSelect.buttonclick: // menu click, click seems to be detected instead of hovering sometimes
                             FieldInfo clickClip = xsfx.GetField("buttonClickClip", BindingFlags.NonPublic | BindingFlags.Instance);
                             clickClip.SetValue(xsfxInstance, hitAudio);
                             MelonLogger.Msg("Menu click set");
                             break;
-                        case 11: // menu hover
+                        case SfxSelect.buttonhover: // menu hover
                             
                             FieldInfo hoverClip = xsfx.GetField("buttonHoverClip", BindingFlags.NonPublic | BindingFlags.Instance);
                             hoverClip.SetValue(xsfxInstance, hitAudio);
                             MelonLogger.Msg("Menu hover set");
                             break;
-                        case 20: // game over
+                        case SfxSelect.gameover: // game over
                             Type gcm = typeof(GameControlManager);
                             FieldInfo gameoverClip = gcm.GetField("m_GameOverClip", BindingFlags.NonPublic | BindingFlags.Instance);
                             gameoverClip.SetValue(GameControlManager.s_instance, hitAudio);
                             MelonLogger.Msg("Game over set");
                             break;
-                        case 30: // constant background sounds
+                        case SfxSelect.resultbgm: // constant background sounds
                             Type gssc = typeof(Game_ScoreSceneController);
                             FieldInfo resultClip = gssc.GetField("m_NormalClip", BindingFlags.NonPublic | BindingFlags.Instance);
                             resultClip.SetValue(Game_ScoreSceneController.s_instance, hitAudio);
@@ -148,15 +166,15 @@ namespace Custom_Sound
                 // müsste eher sfxcache sein falls es das gibt
                 // List m_sfxAudioClips (CustomizeGraphy)
                 MelonLogger.Msg("Custom sound HitSFX");
-                var instance = new CustomSound();
-                MelonCoroutines.Start(instance.GetAudioClip(hitFilePath, 0));
-                MelonCoroutines.Start(instance.GetAudioClip(missFilePath, 1));
-                //MelonCoroutines.Start(instance.GetAudioClip(railFilePath, 2));
-                MelonCoroutines.Start(instance.GetAudioClip(specialFilePath, 3));
-                MelonCoroutines.Start(instance.GetAudioClip(specialpassFilePath, 4));
-                MelonCoroutines.Start(instance.GetAudioClip(specialfailFilePath, 5));
-                MelonCoroutines.Start(instance.GetAudioClip(maxcomboFilePath, 6));
-                MelonCoroutines.Start(instance.GetAudioClip(wallFilePath, 7));
+                var cs_instance = new CustomSound();
+                MelonCoroutines.Start(cs_instance.GetAudioClip(hitFilePath, SfxSelect.hit));
+                MelonCoroutines.Start(cs_instance.GetAudioClip(missFilePath, SfxSelect.miss));
+                //MelonCoroutines.Start(instance.GetAudioClip(railFilePath, SfxSelect.rail));
+                MelonCoroutines.Start(cs_instance.GetAudioClip(specialFilePath, SfxSelect.special));
+                MelonCoroutines.Start(cs_instance.GetAudioClip(specialpassFilePath, SfxSelect.specialpass));
+                MelonCoroutines.Start(cs_instance.GetAudioClip(specialfailFilePath, SfxSelect.specialfail));
+                MelonCoroutines.Start(cs_instance.GetAudioClip(maxcomboFilePath, SfxSelect.maxcombo));
+                MelonCoroutines.Start(cs_instance.GetAudioClip(wallFilePath, SfxSelect.wall));
             }
         }
         [HarmonyPatch(typeof(ExtraSFXAudioController), "Awake")]
@@ -164,10 +182,10 @@ namespace Custom_Sound
         {
             private static void Postfix()
             {
-                var instance = new CustomSound();
                 MelonLogger.Msg("Custom sound XSFX");
-                MelonCoroutines.Start(instance.GetAudioClip(buttonclickFilePath, 10));
-                MelonCoroutines.Start(instance.GetAudioClip(buttonhoverFilePath, 11));
+                var cs_instance = new CustomSound();
+                MelonCoroutines.Start(cs_instance.GetAudioClip(buttonclickFilePath, SfxSelect.buttonclick));
+                MelonCoroutines.Start(cs_instance.GetAudioClip(buttonhoverFilePath, SfxSelect.buttonhover));
             }
         }
         [HarmonyPatch(typeof(GameControlManager), "Awake")]
@@ -182,9 +200,9 @@ namespace Custom_Sound
                         m_SpecialFailCip
                         m_CounterClip
                          */
-                var instance = new CustomSound();
+                var cs_instance = new CustomSound();
                 MelonLogger.Msg("Custom sound GCM");
-                MelonCoroutines.Start(instance.GetAudioClip(gameoverFilePath, 20));
+                MelonCoroutines.Start(cs_instance.GetAudioClip(gameoverFilePath, SfxSelect.gameover));
             }
         }
         [HarmonyPatch(typeof(Game_ScoreSceneController), "Awake")]
@@ -193,9 +211,9 @@ namespace Custom_Sound
             private static void Postfix()
             {
                 // from Game_ScoreSceneController (all audioclips are private)
-                var instance = new CustomSound();
+                var cs_instance = new CustomSound();
                 MelonLogger.Msg("Custom sound GSSC");
-                MelonCoroutines.Start(instance.GetAudioClip(resultFilePath, 30));
+                MelonCoroutines.Start(cs_instance.GetAudioClip(resultFilePath, SfxSelect.resultbgm));
             }
         }
     }
