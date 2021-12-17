@@ -1,6 +1,6 @@
 # CustomSounds
 
-Allows to customize most sounds from Synth Riders
+Allows to customize most sounds from Synth Riders [PCVR]
 
 ## Supported sounds
 
