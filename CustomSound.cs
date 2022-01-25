@@ -56,7 +56,9 @@ namespace Custom_Sound
 
         public IEnumerator GetAudioClip(string path, SfxSelect sfxSelect)
         {
-            if (!File.Exists(full_path + path) || new FileInfo(full_path + path).Length == 0) yield break;
+            AudioClip hitAudio = null;
+            if (!File.Exists(full_path + path)) yield break;
+            
             using (UnityWebRequest webRequest = UnityWebRequestMultimedia.GetAudioClip("file://" + root + path, AudioType.WAV))
             {
 
@@ -67,7 +69,10 @@ namespace Custom_Sound
                 }
                 else
                 {
-                    AudioClip hitAudio = DownloadHandlerAudioClip.GetContent(webRequest);
+                    if (new FileInfo(full_path + path).Length != 0)
+                    {
+                        hitAudio = DownloadHandlerAudioClip.GetContent(webRequest);
+                    }
                     
                     // position in array: 0 = Impact, 1 = Laser
                     switch (sfxSelect)
@@ -107,7 +112,8 @@ namespace Custom_Sound
         }
         public IEnumerator GetAudioClip_HitSFX(string path, String fieldName)
         {
-            if (!File.Exists(full_path + path) || new FileInfo(full_path + path).Length == 0) yield break;
+            AudioClip hitAudio = null;
+            if (!File.Exists(full_path + path)) yield break;
             using (UnityWebRequest webRequest = UnityWebRequestMultimedia.GetAudioClip("file://" + root + path, AudioType.WAV))
             {
                 FieldInfo instanceField = null;
@@ -119,7 +125,10 @@ namespace Custom_Sound
                 }
                 else
                 {
-                    AudioClip hitAudio = DownloadHandlerAudioClip.GetContent(webRequest);
+                    if (new FileInfo(full_path + path).Length != 0)
+                    {
+                        hitAudio = DownloadHandlerAudioClip.GetContent(webRequest);
+                    }
                     Type objectType = typeof(Util_HitSFXSource);
                     var instance = Util_HitSFXSource.s_instance;
                     audioField = objectType.GetField(fieldName, BindingFlags.NonPublic | BindingFlags.Instance);
@@ -130,7 +139,8 @@ namespace Custom_Sound
 
         public IEnumerator GetAudioClip(string path, Type objectType, String fieldName, bool isPublicInstance = false)
         {
-            if (!File.Exists(full_path + path) || new FileInfo(full_path + path).Length == 0) yield break;
+            AudioClip hitAudio = null;
+            if (!File.Exists(full_path + path)) yield break;
             using (UnityWebRequest webRequest = UnityWebRequestMultimedia.GetAudioClip("file://" + root + path, AudioType.WAV))
             {
                 FieldInfo instanceField = null;
@@ -142,7 +152,10 @@ namespace Custom_Sound
                 }
                 else
                 {
-                    AudioClip hitAudio = DownloadHandlerAudioClip.GetContent(webRequest);
+                    if (new FileInfo(full_path + path).Length != 0)
+                    {
+                        hitAudio = DownloadHandlerAudioClip.GetContent(webRequest);
+                    }
                     if (isPublicInstance)
                     {
                         instanceField = objectType.GetField("s_instance", BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static);
@@ -160,7 +173,8 @@ namespace Custom_Sound
 
         public IEnumerator GetAudioClip(string path, AudioSource source)
         {
-            if (!File.Exists(full_path + path) || new FileInfo(full_path + path).Length == 0) yield break;
+            AudioClip hitAudio = null;
+            if (!File.Exists(full_path + path)) yield break;
             using (UnityWebRequest webRequest = UnityWebRequestMultimedia.GetAudioClip("file://" + root + path, AudioType.WAV))
             {
 
@@ -172,7 +186,10 @@ namespace Custom_Sound
                 }
                 else
                 {
-                    AudioClip hitAudio = DownloadHandlerAudioClip.GetContent(webRequest);
+                    if (new FileInfo(full_path + path).Length != 0)
+                    {
+                        hitAudio = DownloadHandlerAudioClip.GetContent(webRequest);
+                    }
                     source.clip = hitAudio;
                     source.Play();
                 }
@@ -230,9 +247,9 @@ namespace Custom_Sound
             {
                 /* from GameControlManager (all audioclips are private)
                         m_GameOverClip
-                        m_SpecialStartClip
-                        m_SpecialEndClip
-                        m_SpecialFailCip
+                        m_SpecialStartClip -> unused?
+                        m_SpecialEndClip -> unused?
+                        m_SpecialFailCip -> unused?
                         m_CounterClip
                          */
                 var cs_instance = new CustomSound();
@@ -259,8 +276,7 @@ namespace Custom_Sound
                         MelonCoroutines.Start(cs_instance.GetAudioClip(applauseFilePath, source));
                         break;
                     case "Ambient":
-                        //MelonCoroutines.Start(cs_instance.GetAudioClip(ambientFilePath, source));
-                        source.enabled = false;
+                        MelonCoroutines.Start(cs_instance.GetAudioClip(ambientFilePath, source));
                         break;
                     case "Carro5":
                         //cs_instance.GetAudioClip(droneSoundPath, source.clip);
@@ -294,8 +310,7 @@ namespace Custom_Sound
                 specialfailFilePath, maxmultilierFilePath, wallFilePath, buttonclickFilePath, buttonhoverFilePath, gameoverFilePath,
                 resultFilePath, applauseFilePath};
 
-            LoggerInstance.Msg("Start check");
-            LoggerInstance.Msg(Application.dataPath + "/../" + root);
+            LoggerInstance.Msg("Init");
             if (!Directory.Exists(Application.dataPath + "/../" + root))
             {
                 Directory.CreateDirectory(Application.dataPath + "/../" + root);
