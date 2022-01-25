@@ -29,8 +29,4 @@ Currently supports customization for the following sounds:
 5. Profit?!
 
 ## Disclaimer
-Adding this mod might cause random lag spikes during the song. 
-Still investigating this as I had a live stream on last time I tested the mod and 
-at least in theory the mod should only execute code immediately after a scene gets loaded.
-
-This mod is not related to Synth Riders Devs or Kluge Interactive in any way.
+This mod is not related to Synth Riders Devs or Kluge Interactive.

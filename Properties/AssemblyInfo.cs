@@ -37,5 +37,5 @@ using MelonLoader;
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
-[assembly: MelonInfo(typeof(CustomSound), "CustomSound", "1.0.0", "Moinn")]
+[assembly: MelonInfo(typeof(CustomSound), "CustomSound", "1.0.1", "Moinn")]
 [assembly: MelonGame("Kluge Interactive", "SynthRiders")]
