@@ -15,7 +15,8 @@ Currently supports customization for the following sounds:
 * Wall hit (wall.wav)
 * Menu button click (buttonclick.wav)
 * Menu button hover (buttonhover.wav)
-* Game over  (gameover.wav)
+* End message/Good, Awesome, Perfect (endmessage.wav) [**NEW**]
+* Game over (gameover.wav)
 * BGM in result screen (resultbgm.wav)
 * Ambient in result screen (ambient.wav)
 * Applause in result screen (applause.wav)
