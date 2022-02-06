@@ -28,10 +28,10 @@ namespace Custom_Sound
         public static string resultFilePath = "resultbgm.wav";
         public static string ambientFilePath = "ambient.wav";
         public static string applauseFilePath = "applause.wav";
+        public static string endMessagePath = "endmessage.wav";
         public static CustomSound cs_instance;
         /*
          * missing sounds:
-            * song pass
             * power up
             * Game_PauseMenu.OnSFXChange()
          */
@@ -116,7 +116,7 @@ namespace Custom_Sound
             if (!File.Exists(full_path + path)) yield break;
             using (UnityWebRequest webRequest = UnityWebRequestMultimedia.GetAudioClip("file://" + root + path, AudioType.WAV))
             {
-                FieldInfo instanceField = null;
+                //FieldInfo instanceField = null;
                 FieldInfo audioField = null;
                 yield return webRequest.SendWebRequest();
                 if (webRequest.isNetworkError | webRequest.isHttpError)
@@ -205,7 +205,7 @@ namespace Custom_Sound
                 var cs_instance = new CustomSound();
                 Type classType = typeof(Util_HitSFXSource);
                 Util_HitSFXSource instance = Util_HitSFXSource.s_instance;
-                FieldInfo pathField = null;
+                //FieldInfo pathField = null;
 
                 MelonCoroutines.Start(cs_instance.GetAudioClip(hitFilePath, SfxSelect.hit));
                 MelonCoroutines.Start(cs_instance.GetAudioClip(missFilePath, SfxSelect.miss));
@@ -256,6 +256,11 @@ namespace Custom_Sound
                 MelonLogger.Msg("Setting Game Over SFX");
                 Type classType = typeof(GameControlManager);
                 MelonCoroutines.Start(cs_instance.GetAudioClip(gameoverFilePath, classType, "m_GameOverClip", true));
+                MelonLogger.Msg("Setting End Message");
+                GameObject managerVRTK = GameObject.Find("VRTKManager");
+                Transform endMessageAudio = managerVRTK.transform.Find("LatencyWrap/[Score & Misc]/[Score UI]/Wrap/[End Message]/Field/Audio");
+                AudioSource sndSource = (AudioSource)endMessageAudio.GetComponent(typeof(AudioSource));
+                MelonCoroutines.Start(cs_instance.GetAudioClip(endMessagePath, sndSource));
             }
         }
 
