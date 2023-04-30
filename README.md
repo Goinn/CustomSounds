@@ -8,6 +8,8 @@ Currently supports customization for the following sounds:
 
 * Note hit/Laser hit sound (hit.wav)
 * Note miss (miss.wav)
+* Rail start [**NEW**]
+* Rail end [**NEW**]
 * Special start (special.wav)
 * Special fail (specialfail.wav)
 * Special pass (specialpass.wav)
@@ -15,7 +17,7 @@ Currently supports customization for the following sounds:
 * Wall hit (wall.wav)
 * Menu button click (buttonclick.wav)
 * Menu button hover (buttonhover.wav)
-* End message/Good, Awesome, Perfect (endmessage.wav) [**NEW**]
+* End message/Good, Awesome, Perfect (endmessage.wav)
 * Game over (gameover.wav)
 * BGM in result screen (resultbgm.wav)
 * Ambient in result screen (ambient.wav)
