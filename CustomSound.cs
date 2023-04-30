@@ -15,7 +15,8 @@ namespace Custom_Sound
         public static string root = "/CustomSounds/";
         public static string full_path = Application.dataPath + "/.." + root;
         public static string hitFilePath = "hit.wav";
-        public static string railFilePath = "rail.wav";
+        public static string railEndFilePath = "railend.wav";
+        public static string railStartFilePath = "railstart.wav";
         public static string missFilePath = "miss.wav";
         public static string specialFilePath = "special.wav";
         public static string specialpassFilePath = "specialpass.wav";
@@ -40,7 +41,8 @@ namespace Custom_Sound
         {
             hit,
             miss,
-            rail,
+            railstart,
+            railend,
             special,
             specialpass,
             specialfail,
@@ -86,10 +88,15 @@ namespace Custom_Sound
                         case SfxSelect.miss: // note miss
                             Util_HitSFXSource.s_instance.m_failClip = hitAudio;
                             break;
-                        case SfxSelect.rail:
+                        case SfxSelect.railstart:
                             Util_HitSFXSource.s_instance.m_lineStartClip[1] = hitAudio;
-                            //Util_HitSFXSource.s_instance.m_lineClip[1] = hitAudio; is private for some reason
+                            //Util_HitSFXSource.s_instance.m_lineClip[1] = hitAudio; //is private for some reason
+                            MelonLogger.Msg("Set railstart");
+                            break;
+                        case SfxSelect.railend:
+                            //Util_HitSFXSource.s_instance.m_lineClip[1] = hitAudio; //is private for some reason
                             Util_HitSFXSource.s_instance.m_lineEndClip[1] = hitAudio; // rail end hit
+                            MelonLogger.Msg("Set railend");
                             break;
                         case SfxSelect.special: // special start
                             Util_HitSFXSource.s_instance.m_comboClip = hitAudio;
@@ -209,7 +216,8 @@ namespace Custom_Sound
 
                 MelonCoroutines.Start(cs_instance.GetAudioClip(hitFilePath, SfxSelect.hit));
                 MelonCoroutines.Start(cs_instance.GetAudioClip(missFilePath, SfxSelect.miss));
-                //MelonCoroutines.Start(instance.GetAudioClip(railFilePath, SfxSelect.rail));
+                MelonCoroutines.Start(cs_instance.GetAudioClip(railStartFilePath, SfxSelect.railstart));
+                MelonCoroutines.Start(cs_instance.GetAudioClip(railEndFilePath, SfxSelect.railend));
                 MelonCoroutines.Start(cs_instance.GetAudioClip(specialFilePath, SfxSelect.special));
                 MelonCoroutines.Start(cs_instance.GetAudioClip(specialpassFilePath, SfxSelect.specialpass));
                 MelonCoroutines.Start(cs_instance.GetAudioClip(specialfailFilePath, SfxSelect.specialfail));
@@ -308,10 +316,10 @@ namespace Custom_Sound
             if (sceneName == "3.GameEnd") OverwriteResultScreen();
         }
 
-        public override void OnApplicationLateStart()
+        public override void OnLateInitializeMelon()
         {
-            base.OnApplicationLateStart();
-            string[] audioFiles = new string[] { hitFilePath, railFilePath, missFilePath, specialFilePath, specialpassFilePath,
+            base.OnLateInitializeMelon();
+            string[] audioFiles = new string[] { hitFilePath, railStartFilePath, railEndFilePath, missFilePath, specialFilePath, specialpassFilePath,
                 specialfailFilePath, maxmultilierFilePath, wallFilePath, buttonclickFilePath, buttonhoverFilePath, gameoverFilePath,
                 resultFilePath, applauseFilePath};
 
