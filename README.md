@@ -6,7 +6,7 @@ Allows to customize most sounds from Synth Riders [PCVR]
 
 Currently supports customization for the following sounds:
 
-* Note hit (hit.wav)
+* Note hit/Laser hit sound (hit.wav)
 * Note miss (miss.wav)
 * Special start (special.wav)
 * Special fail (specialfail.wav)
